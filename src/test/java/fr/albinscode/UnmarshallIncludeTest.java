@@ -25,6 +25,8 @@ public class UnmarshallIncludeTest extends AbstractTestUtils {
     public void testUnmarshallBooksWorking() throws JAXBException {
         Library library = (Library) this.unmarshall(Library.class, new File("src/test/resources/with_include/books-without-namespace.xml"));
 
+        assertFalse(this.hasValidationErrors);
+
         assertNotNull(library);
         assertNotNull(library.getBooks());
         
@@ -33,8 +35,6 @@ public class UnmarshallIncludeTest extends AbstractTestUtils {
         assertNotNull(library.getBooks().getBook().get(0).getTitle());
 
         library.getBooks().getBook().stream().forEach( book -> System.out.println(book.getTitle()));;
-
-        assertFalse(this.hasValidationErrors);
     }
     
     /**
@@ -47,13 +47,14 @@ public class UnmarshallIncludeTest extends AbstractTestUtils {
 
         Library library = (Library) this.unmarshall(Library.class, new File("src/test/resources/with_include/authors-only-without-namespace.xml"));
 
+        assertFalse(this.hasValidationErrors);
+
         assertNotNull(library);
         assertNotNull(library.getAuthors());
         assertEquals(1, library.getAuthors().getAuthor().size());
         assertNotNull(library.getAuthors().getAuthor().get(0));
 
         System.out.println(library.getAuthors().getAuthor().get(0));
-        assertFalse(this.hasValidationErrors);
     }
     
     

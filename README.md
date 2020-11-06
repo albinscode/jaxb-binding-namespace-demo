@@ -1,6 +1,6 @@
 # Aim
 
-This tiny project allows to show constraints when dealing with `import` or `include` xsd tags.
+This tiny project allows to show constraints when dealing with `import` or `include` XSD tags.
 
 The idea is to understand XML/XSD constraints to choose right model depdending of our developping needs...
 
@@ -8,7 +8,7 @@ The idea is to understand XML/XSD constraints to choose right model depdending o
 
 The demonstration model is a `Library` which is a set of `Book` and `Author`.
 
-Here is an xml example (without namespaces to avoid confusion):
+Here is an XML example (without namespaces to avoid confusion):
 
 ~~~xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -30,7 +30,7 @@ The data model is described with two XSD schema files:
 * `main.xsd` will describe the `Library` and embedded sequences
 * `commons.xsd` will describe the `Book`, `Author` and `Title` structures
 
-Depending of the naming convention, xsd and xml files will appear with suffixes describing the way `commons.xsd` has been "picked" by `main.xsd`: import or include.
+Depending of the naming convention, XSD and XML files will appear with suffixes describing the way `commons.xsd` has been "picked" by `main.xsd`: import or include.
 
 # Constraints
 
@@ -61,7 +61,7 @@ From a jaxb point of view, you will have only one package for both files.
 
 ## Context
 
-In my case, I got a customer that imports xml data that respect several standards (about 100 XSDs files).
+In my case, I got a customer that imports XML data that respect several standards (about 100 XSDs files).
 
 Of course, I'm using Jaxb to generate classes and it is really a pleasure (as ever).
 
@@ -91,7 +91,7 @@ The proper way indeed would be to modify the standard XSD but this is not always
 
 The main drawbacks are:
 
-* XSD are modified so in case of update it can take take
+* XSD are modified so in case of update it can take a long time to "replay" modifications
 * some preprocessing on XML is needed
 
 The main advantage is that you don't have to duplicate your code...

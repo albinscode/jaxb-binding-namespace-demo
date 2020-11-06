@@ -7,8 +7,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
 
 import org.junit.Test;
 
@@ -26,14 +28,14 @@ public class UnmarshallImportTest extends AbstractTestUtils {
     public void testUnmarshallBooksNotWorking() throws JAXBException {
         Library library = (Library) this.unmarshall(Library.class, new File("src/test/resources/with_import/books-without-namespace.xml"));
 
+        assertTrue(this.hasValidationErrors);
+
         assertNotNull(library);
         assertNotNull(library.getBooks());
         
         // books are unmarshalled but void
         assertEquals(1, library.getBooks().getBook().size());
         assertNull(library.getBooks().getBook().get(0).getTitle());
-        
-        assertTrue(this.hasValidationErrors);
     }
     
     /**
@@ -45,6 +47,8 @@ public class UnmarshallImportTest extends AbstractTestUtils {
     public void testUnmarshallBooksWorking() throws JAXBException {
         Library library = (Library) this.unmarshall(Library.class, new File("src/test/resources/with_import/books-with-namespace.xml"));
 
+        assertFalse(this.hasValidationErrors);
+
         assertNotNull(library);
         assertNotNull(library.getBooks());
         
@@ -53,7 +57,6 @@ public class UnmarshallImportTest extends AbstractTestUtils {
         assertNotNull(library.getBooks().getBook().get(0).getTitle());
 
         library.getBooks().getBook().stream().forEach( book -> System.out.println(book.getTitle()));;
-        assertFalse(this.hasValidationErrors);
     }
     
     /**
@@ -66,13 +69,43 @@ public class UnmarshallImportTest extends AbstractTestUtils {
 
         Library library = (Library) this.unmarshall(Library.class, new File("src/test/resources/with_import/authors-only-without-namespace.xml"));
 
+        assertFalse(this.hasValidationErrors);
+
         assertNotNull(library);
         assertNotNull(library.getAuthors());
         assertEquals(1, library.getAuthors().getAuthor().size());
         assertNotNull(library.getAuthors().getAuthor().get(0));
         
-        assertFalse(this.hasValidationErrors);
     }
     
+    /**
+     * Processes a xml file that has books with no namespace prefix with XSL to add prefixes.
+     * Then unmarshall it to check it has worked.
+     * @throws JAXBException
+     * @throws TransformerException 
+     * @throws IOException 
+     */
+    @Test
+    public void testUnmarshallBooksWorkingAfterTransformation() throws JAXBException, TransformerException, IOException {
+
+        // transforms the file
+        File xmlFile = new File("src/test/resources/with_import/books-without-namespace.xml");
+        File transformedFile = File.createTempFile(xmlFile.getName(), "-xsl-transformed");
+        this.xslTransform(xmlFile, new File("xsd/add-prefixes.xsl"), transformedFile);
+
+        // unmarshall the file
+        Library library = (Library) this.unmarshall(Library.class, transformedFile);
+
+        assertFalse(this.hasValidationErrors);
+
+        assertNotNull(library);
+        assertNotNull(library.getBooks());
+        
+        // books are unmarshalled but void
+        assertEquals(1, library.getBooks().getBook().size());
+        assertNotNull(library.getBooks().getBook().get(0).getTitle());
+
+        library.getBooks().getBook().stream().forEach( book -> System.out.println(book.getTitle()));;
+    }
     
 }
