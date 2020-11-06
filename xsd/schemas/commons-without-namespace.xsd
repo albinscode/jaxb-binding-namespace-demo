@@ -1,0 +1,25 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified" attributeFormDefault="unqualified" version="1">
+
+    <xs:simpleType name="Author">
+        <xs:restriction base="xs:string">
+            <xs:length value="100"></xs:length>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Title">
+        <xs:restriction base="xs:string">
+            <xs:length value="100"></xs:length>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Book">
+        <xs:sequence>
+            <xs:element name="author" type="Author"></xs:element>
+            <xs:element name="title" type="Title"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+</xs:schema>
+
+        

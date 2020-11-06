@@ -1,14 +1,11 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-    xmlns="http://fr.albinscode/1/main"
-    targetNamespace="http://fr.albinscode/1/main"
-
-    xmlns:commons="http://fr.albinscode/1/commons"
+    xmlns="http://fr.albinscode/1/main-with-include"
+    targetNamespace="http://fr.albinscode/1/main-with-include"
 
     elementFormDefault="qualified" attributeFormDefault="unqualified"
     version="1">
 
-    <xs:import namespace="http://fr.albinscode/1/commons"
-        schemaLocation="./commons.xsd"></xs:import>
+    <xs:include schemaLocation="./commons-without-namespace.xsd"></xs:include>
 
     <!-- a library is a set of books -->
     <xs:element name="library">
@@ -19,7 +16,7 @@
                 <xs:element name="books">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="book" type="commons:Book" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                            <xs:element name="book" type="Book" minOccurs="1" maxOccurs="unbounded"></xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -28,7 +25,7 @@
                 <xs:element name="authors">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="author" type="commons:Author" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                            <xs:element name="author" type="Author" minOccurs="1" maxOccurs="unbounded"></xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -36,6 +33,5 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    
 
 </xs:schema>

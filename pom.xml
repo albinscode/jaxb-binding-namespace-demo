@@ -7,13 +7,14 @@
     <version>1.0.O</version>
 
     <properties>
-        <xsd-source-main>./xsd/schemas-include/main.xsd</xsd-source-main>
+        <xsd-source-main-with-import>./xsd/schemas/main-with-import.xsd</xsd-source-main-with-import>
+        <xsd-source-main-with-include>./xsd/schemas/main-with-include.xsd</xsd-source-main-with-include>
         <xjb-source-main>./xsd/binding-main.xjb</xjb-source-main>
-        <xjb-source-common>./xsd/binding-common.xjb</xjb-source-common>
+        <xjb-source-common-without-namespace>./xsd/binding-common-without-namespace.xjb</xjb-source-common-without-namespace>
+        <xjb-source-common-with-namespace>./xsd/binding-common-with-namespace.xjb</xjb-source-common-with-namespace>
         <generated-sources-directory>src/main/generated/</generated-sources-directory>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <!-- <main.class>fr.linagora.sycloe.command.MainCommand</main.class> -->
     </properties>
 
     <dependencies>
@@ -22,6 +23,12 @@
             <artifactId>junit</artifactId>
             <version>4.13</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
         <dependency>
@@ -60,7 +67,7 @@
                 <version>2.5.0</version>
                 <executions>
                     <execution>
-                        <id>xjc-main</id>
+                        <id>xjc-main-with-import</id>
                         <goals>
                             <goal>${xjc.generate}</goal>
                         </goals>
@@ -74,7 +81,7 @@
                             <!-- <arguments><argument>-verbose</argument></arguments> -->
                             <outputDirectory>${generated-sources-directory}</outputDirectory>
                             <sources>
-                                <source>${xsd-source-main}</source>
+                                <source>${xsd-source-main-with-import}</source>
                             </sources>
                             <xjbExcludeFilters>
                                 <filter
@@ -86,7 +93,39 @@
                                 </filter>
                             </xjbExcludeFilters>
                             <xjbSources>
-                                <xjbSource>${xjb-source-common}</xjbSource>
+                                <xjbSource>${xjb-source-common-without-namespace}</xjbSource>
+                                <xjbSource>${xjb-source-main}</xjbSource>
+                            </xjbSources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>xjc-main-with-include</id>
+                        <goals>
+                            <goal>${xjc.generate}</goal>
+                        </goals>
+                        <configuration>
+                            <extension>true</extension>
+                            <arguments>
+                                <argument>-Xinheritance</argument>
+                                <argument>-npa</argument>
+                            </arguments>
+                            <clearOutputDir>false</clearOutputDir>
+                            <!-- <arguments><argument>-verbose</argument></arguments> -->
+                            <outputDirectory>${generated-sources-directory}</outputDirectory>
+                            <sources>
+                                <source>${xsd-source-main-with-include}</source>
+                            </sources>
+                            <xjbExcludeFilters>
+                                <filter
+                                    implementation="org.codehaus.mojo.jaxb2.shared.filters.pattern.PatternFileFilter">
+                                    <patterns>
+                                        <pattern>\.txt</pattern>
+                                        <pattern>\.xsd</pattern>
+                                    </patterns>
+                                </filter>
+                            </xjbExcludeFilters>
+                            <xjbSources>
+                                <xjbSource>${xjb-source-common-without-namespace}</xjbSource>
                                 <xjbSource>${xjb-source-main}</xjbSource>
                             </xjbSources>
                         </configuration>
