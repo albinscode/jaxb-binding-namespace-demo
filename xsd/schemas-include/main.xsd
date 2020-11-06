@@ -1,0 +1,41 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="http://fr.albinscode/1/main"
+    targetNamespace="http://fr.albinscode/1/main"
+
+    xmlns:commons="http://fr.albinscode/1/commons"
+
+    elementFormDefault="qualified" attributeFormDefault="unqualified"
+    version="1">
+
+    <xs:import namespace="http://fr.albinscode/1/commons"
+        schemaLocation="./commons.xsd"></xs:import>
+
+    <!-- a library is a set of books -->
+    <xs:element name="library">
+        <xs:complexType>
+            <xs:sequence>
+            
+                <!-- list of available books -->
+                <xs:element name="books">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="book" type="commons:Book" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+                <!-- list of available authors -->
+                <xs:element name="authors">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="author" type="commons:Author" minOccurs="1" maxOccurs="unbounded"></xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+
+</xs:schema>

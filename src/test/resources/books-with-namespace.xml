@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<library xmlns="http://fr.albinscode/1/main" xmlns:commons="http://fr.albinscode/1/commons" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <books>
+        <book>
+            <commons:title>Misery</commons:title>
+            <commons:author>Stephen King</commons:author>
+        </book>
+    </books>
+</library>

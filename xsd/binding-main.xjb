@@ -1,0 +1,6 @@
+<jxb:bindings xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+    xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+    extensionBindingPrefixes="inheritance" version="2.1">
+
+</jxb:bindings>
